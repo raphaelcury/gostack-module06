@@ -14,6 +14,14 @@ export default class Main extends Component {
   handleAddButton = async () => {
     const { newUser, users } = this.state;
     const { data } = await api.get(`/users/${newUser}`);
+    const user = {
+      name: data.name,
+      login: data.login,
+      bio: data.bio,
+      avatar: data.avatar_url,
+    };
+    this.setState({ users: [...users, user] });
+    console.tron.log(this.state.users);
   };
 
   render() {
@@ -27,6 +35,8 @@ export default class Main extends Component {
             placeholder="Adicionar usuário"
             value={newUser}
             onChangeText={text => this.setState({ newUser: text })}
+            returnKeyType="send"
+            onSubmitEditing={this.handleAddButton}
           />
           <SubmitButton onPress={this.handleAddButton}>
             <Icon name="add" size={20} color="#fff" />
