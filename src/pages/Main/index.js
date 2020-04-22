@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+import api from '../../services/api';
+
 import { Container, Form, Input, SubmitButton } from './styles';
 
 export default class Main extends Component {
   state = {
     newUser: '',
+    users: [],
   };
 
-  handleAddButton = () => {
-    console.tron.log(this.state.newUser);
+  handleAddButton = async () => {
+    const { newUser, users } = this.state;
+    const { data } = await api.get(`/users/${newUser}`);
   };
 
   render() {
