@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Keyboard } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '../../services/api';
@@ -21,7 +22,7 @@ export default class Main extends Component {
       avatar: data.avatar_url,
     };
     this.setState({ users: [...users, user], newUser: '' });
-    console.tron.log(this.state.users);
+    Keyboard.dismiss();
   };
 
   render() {
