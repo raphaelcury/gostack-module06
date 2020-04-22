@@ -20,7 +20,7 @@ export default class Main extends Component {
       bio: data.bio,
       avatar: data.avatar_url,
     };
-    this.setState({ users: [...users, user] });
+    this.setState({ users: [...users, user], newUser: '' });
     console.tron.log(this.state.users);
   };
 
