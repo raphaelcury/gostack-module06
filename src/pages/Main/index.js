@@ -33,7 +33,9 @@ export default class Main extends Component {
       bio: data.bio,
       avatar: data.avatar_url,
     };
-    this.setState({ users: [...users, user], newUser: '' });
+    console.tron.log(user);
+    this.setState({ newUser: '', users: [...users, user] });
+    console.tron.log(users);
     Keyboard.dismiss();
   };
 
@@ -60,11 +62,11 @@ export default class Main extends Component {
           keyExtractor={(user) => user.login}
           renderItem={({ item }) => (
             <User>
-              <Avatar />
-              <Name />
-              <Bio />
-              <ProfileButton>
-                <ProfileButtonText />
+              <Avatar source={{ uri: item.avatar }} />
+              <Name>{item.name} </Name>
+              <Bio>{item.bio}</Bio>
+              <ProfileButton onPress={() => false}>
+                <ProfileButtonText>Ver Perfil</ProfileButtonText>
               </ProfileButton>
             </User>
           )}
