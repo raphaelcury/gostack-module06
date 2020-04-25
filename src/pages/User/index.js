@@ -43,11 +43,7 @@ export default class Users extends Component {
     const { route } = this.props;
     const { login } = route.params.user;
     this.setState({ loading: true });
-    const response = await api.get(`/users/${login}/starred`, {
-      params: {
-        per_page: 10,
-      },
-    });
+    const response = await api.get(`/users/${login}/starred`);
     this.setState({ starred: response.data, loading: false });
   }
 
@@ -59,13 +55,17 @@ export default class Users extends Component {
     const response = await api.get(`/users/${login}/starred`, {
       params: {
         page: newPage,
-        per_page: 10,
       },
     });
     this.setState({
       starred: [...starred, ...response.data],
       page: newPage,
     });
+    this.listRef.flashScrollIndicators();
+  };
+
+  setListRef = (listRef) => {
+    this.listRef = listRef;
   };
 
   render() {
@@ -85,6 +85,7 @@ export default class Users extends Component {
             <ActivityIndicator size="large" />
           ) : (
             <StarredList
+              ref={this.setListRef}
               data={starred}
               keyExtractor={(repo) => String(repo.id)}
               onEndReachedThreshold={0.2}
