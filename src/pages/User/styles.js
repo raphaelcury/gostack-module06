@@ -58,8 +58,12 @@ export const OwnerAvatar = styled.Image`
   border-radius: 20px;
   margin-right: 10px;
 `;
-export const RepoInfo = styled.View``;
-export const RepoName = styled.Text`
+export const RepoInfo = styled.View`
+  max-width: 250px;
+`;
+export const RepoName = styled.Text.attrs({
+  numberOfLines: 1,
+})`
   font-size: 16px;
   font-weight: bold;
   line-height: 24px;

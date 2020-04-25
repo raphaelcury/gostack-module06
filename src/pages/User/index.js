@@ -36,15 +36,37 @@ export default class Users extends Component {
   state = {
     starred: [],
     loading: false,
+    page: 1,
   };
 
   async componentDidMount() {
     const { route } = this.props;
     const { login } = route.params.user;
     this.setState({ loading: true });
-    const response = await api.get(`/users/${login}/starred`);
+    const response = await api.get(`/users/${login}/starred`, {
+      params: {
+        per_page: 10,
+      },
+    });
     this.setState({ starred: response.data, loading: false });
   }
+
+  loadStarred = async () => {
+    const { route } = this.props;
+    const { login } = route.params.user;
+    const { starred, page } = this.state;
+    const newPage = page + 1;
+    const response = await api.get(`/users/${login}/starred`, {
+      params: {
+        page: newPage,
+        per_page: 10,
+      },
+    });
+    this.setState({
+      starred: [...starred, ...response.data],
+      page: newPage,
+    });
+  };
 
   render() {
     const { route } = this.props;
@@ -65,6 +87,8 @@ export default class Users extends Component {
             <StarredList
               data={starred}
               keyExtractor={(repo) => String(repo.id)}
+              onEndReachedThreshold={0.2}
+              onEndReached={this.loadStarred}
               renderItem={({ item }) => (
                 <StarredRepo>
                   <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
