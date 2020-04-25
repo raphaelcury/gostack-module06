@@ -30,3 +30,36 @@ export const Bio = styled.Text`
   font-size: 14px;
   color: gray;
 `;
+
+export const StarredList = styled.FlatList.attrs({
+  showsVerticalScrollIndicator: false,
+})`
+  flex: 1;
+  margin-top: 20px;
+`;
+export const StarredRepo = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 20px;
+  background: lightgray;
+  border-radius: 5px;
+  padding: 10px;
+`;
+export const OwnerAvatar = styled.Image`
+  width: 40px;
+  height: 40px;
+  background: gray;
+  border-radius: 20px;
+  margin-right: 10px;
+`;
+export const RepoInfo = styled.View``;
+export const RepoName = styled.Text`
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 24px;
+  color: #333;
+`;
+export const OwnerLogin = styled.Text`
+  font-size: 14px;
+  color: #333;
+`;
