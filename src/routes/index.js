@@ -22,7 +22,11 @@ export default function Routes() {
         component={Main}
         options={{ title: 'Usuários' }}
       />
-      <Stack.Screen name="Users" component={Users} />
+      <Stack.Screen
+        name="Users"
+        component={Users}
+        options={({ route }) => ({ title: route.params.user.name })}
+      />
     </Stack.Navigator>
   );
 }
