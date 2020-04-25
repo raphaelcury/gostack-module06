@@ -2,16 +2,28 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
+import api from '../../services/api';
+
 // import { Container } from './styles';
 
 export default class Users extends Component {
   static propTypes = {
-    navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
+    route: PropTypes.shape({
+      params: PropTypes.shape({
+        user: PropTypes.shape({ login: PropTypes.string.isRequired })
+          .isRequired,
+      }).isRequired,
+    }).isRequired,
   };
 
-  render() {
+  async componentDidMount() {
     const { route } = this.props;
-    console.tron.log(route.params);
+    const { login } = route.params.user;
+
+    const response = await api.get(`/users/${login}/starred`);
+  }
+
+  render() {
     return (
       <View>
         <Text>Users</Text>
