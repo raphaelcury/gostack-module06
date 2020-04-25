@@ -63,7 +63,7 @@ export default class Main extends Component {
 
   handleProfileButton = (user) => {
     const { navigation } = this.props;
-    navigation.navigate('Users', { user });
+    navigation.navigate('User', { user });
   };
 
   render() {

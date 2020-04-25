@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import Main from '../pages/Main';
-import Users from '../pages/Users';
+import User from '../pages/User';
 
 const Stack = createStackNavigator();
 
@@ -23,8 +23,8 @@ export default function Routes() {
         options={{ title: 'Usuários' }}
       />
       <Stack.Screen
-        name="Users"
-        component={Users}
+        name="User"
+        component={User}
         options={({ route }) => ({ title: route.params.user.name })}
       />
     </Stack.Navigator>
