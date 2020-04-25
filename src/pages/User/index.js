@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 
 import api from '../../services/api';
 
-// import { Container } from './styles';
+import { Container, Header, Avatar, Name, Bio } from './styles';
 
 export default class Users extends Component {
   static propTypes = {
@@ -30,10 +29,17 @@ export default class Users extends Component {
   }
 
   render() {
+    const { route } = this.props;
+    const { user } = route.params;
+
     return (
-      <View>
-        <Text>Users</Text>
-      </View>
+      <Container>
+        <Header>
+          <Avatar source={{ uri: user.avatar }} />
+          <Name>{user.name}</Name>
+          <Bio>{user.bio}</Bio>
+        </Header>
+      </Container>
     );
   }
 }
