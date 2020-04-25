@@ -59,7 +59,7 @@ export const OwnerAvatar = styled.Image`
   margin-right: 10px;
 `;
 export const RepoInfo = styled.View`
-  max-width: 250px;
+  width: 225px;
 `;
 export const RepoName = styled.Text.attrs({
   numberOfLines: 1,
@@ -72,4 +72,8 @@ export const RepoName = styled.Text.attrs({
 export const OwnerLogin = styled.Text`
   font-size: 14px;
   color: #333;
+`;
+
+export const NextPageIndicator = styled.View`
+  flex: 0.1;
 `;
