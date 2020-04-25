@@ -37,6 +37,7 @@ export default class Users extends Component {
     starred: [],
     loading: false,
     page: 1,
+    refreshing: false,
   };
 
   async componentDidMount() {
@@ -61,17 +62,20 @@ export default class Users extends Component {
       starred: [...starred, ...response.data],
       page: newPage,
     });
-    this.listRef.flashScrollIndicators();
   };
 
-  setListRef = (listRef) => {
-    this.listRef = listRef;
+  refreshList = async () => {
+    const { route } = this.props;
+    const { login } = route.params.user;
+    this.setState({ refreshing: true });
+    const response = await api.get(`/users/${login}/starred`);
+    this.setState({ starred: response.data, page: 1, refreshing: false });
   };
 
   render() {
     const { route } = this.props;
     const { user } = route.params;
-    const { starred, loading } = this.state;
+    const { starred, loading, refreshing } = this.state;
 
     return (
       <Container>
@@ -85,7 +89,8 @@ export default class Users extends Component {
             <ActivityIndicator size="large" />
           ) : (
             <StarredList
-              ref={this.setListRef}
+              onRefresh={this.refreshList}
+              refreshing={refreshing}
               data={starred}
               keyExtractor={(repo) => String(repo.id)}
               onEndReachedThreshold={0.2}
