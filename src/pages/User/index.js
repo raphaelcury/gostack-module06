@@ -63,7 +63,6 @@ export default class Users extends Component {
         newPage === 1 ? [...response.data] : [...starred, ...response.data],
       page: newPage,
     });
-    console.tron.log(this.state.starred);
   };
 
   refreshStarredList = async () => {
