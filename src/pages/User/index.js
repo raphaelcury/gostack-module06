@@ -16,11 +16,17 @@ export default class Users extends Component {
     }).isRequired,
   };
 
+  state = {
+    starred: [],
+  };
+
   async componentDidMount() {
     const { route } = this.props;
     const { login } = route.params.user;
 
     const response = await api.get(`/users/${login}/starred`);
+
+    this.setState({ starred: response.data });
   }
 
   render() {
