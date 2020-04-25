@@ -31,6 +31,12 @@ export const Bio = styled.Text`
   color: gray;
 `;
 
+export const ListContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const StarredList = styled.FlatList.attrs({
   showsVerticalScrollIndicator: false,
 })`
