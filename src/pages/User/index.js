@@ -49,26 +49,32 @@ export default class Users extends Component {
     this.setState({ loading: false });
   }
 
-  loadStarredList = async () => {
+  loadStarredList = async (newPage = 1) => {
     const { route } = this.props;
     const { login } = route.params.user;
-    const { starred, page } = this.state;
-    const newPage = page + 1;
+    const { starred } = this.state;
     const response = await api.get(`/users/${login}/starred`, {
       params: {
         page: newPage,
       },
     });
     this.setState({
-      starred: [...starred, ...response.data],
+      starred:
+        newPage === 1 ? [...response.data] : [...starred, ...response.data],
       page: newPage,
     });
+    console.tron.log(this.state.starred);
   };
 
   refreshStarredList = async () => {
-    this.setState({ page: 0, refreshing: true });
+    this.setState({ refreshing: true });
     await this.loadStarredList();
     this.setState({ refreshing: false });
+  };
+
+  nextListPage = async () => {
+    const { page } = this.state;
+    await this.loadStarredList(page + 1);
   };
 
   handleRepoPress = (repo) => {
@@ -98,7 +104,7 @@ export default class Users extends Component {
               data={starred}
               keyExtractor={(repo) => String(repo.id)}
               onEndReachedThreshold={0.2}
-              onEndReached={this.loadStarredList}
+              onEndReached={this.nextListPage}
               renderItem={({ item }) => (
                 <TouchableHighlight onPress={() => this.handleRepoPress(item)}>
                   <StarredRepo>
