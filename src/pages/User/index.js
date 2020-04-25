@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, TouchableHighlight } from 'react-native';
 import PropTypes from 'prop-types';
 
 import api from '../../services/api';
@@ -21,6 +21,9 @@ import {
 
 export default class Users extends Component {
   static propTypes = {
+    navigation: PropTypes.shape({
+      navigate: PropTypes.func.isRequired,
+    }).isRequired,
     route: PropTypes.shape({
       params: PropTypes.shape({
         user: PropTypes.shape({
@@ -72,6 +75,11 @@ export default class Users extends Component {
     this.setState({ starred: response.data, page: 1, refreshing: false });
   };
 
+  handleRepoPress = (repo) => {
+    const { navigation } = this.props;
+    navigation.navigate('Repo', { repo });
+  };
+
   render() {
     const { route } = this.props;
     const { user } = route.params;
@@ -96,13 +104,15 @@ export default class Users extends Component {
               onEndReachedThreshold={0.2}
               onEndReached={this.loadStarred}
               renderItem={({ item }) => (
-                <StarredRepo>
-                  <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
-                  <RepoInfo>
-                    <RepoName>{item.name}</RepoName>
-                    <OwnerLogin>{item.owner.login}</OwnerLogin>
-                  </RepoInfo>
-                </StarredRepo>
+                <TouchableHighlight onPress={() => this.handleRepoPress(item)}>
+                  <StarredRepo>
+                    <OwnerAvatar source={{ uri: item.owner.avatar_url }} />
+                    <RepoInfo>
+                      <RepoName>{item.name}</RepoName>
+                      <OwnerLogin>{item.owner.login}</OwnerLogin>
+                    </RepoInfo>
+                  </StarredRepo>
+                </TouchableHighlight>
               )}
             />
           )}
